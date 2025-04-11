@@ -42,10 +42,10 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (credentials) => {
     try {
-      const { data } = await api.post('/login', credentials);
+      const { data } = await api.post('/v1/admin/login', credentials);
       
-      localStorage.setItem('token', data.token);
-      setToken(data.token);
+      localStorage.setItem('token', data.access_token);
+      setToken(data.access_token);
       setUser(data.user);
       setIsAuthenticated(true);
       return { success: true };
@@ -57,23 +57,23 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (credentials) => {
     try {
-      const { data } = await api.post('/register', credentials);
+      const { data } = await api.post('/v1/admin/register', credentials);
     
-      localStorage.setItem('token', data.data.token);
-      setToken(data.data.token);
-      setUser(data.data.user);
+      localStorage.setItem('token', data.access_token);
+      setToken(data.access_token);
+      setUser(data.user);
       setIsAuthenticated(true);
       return { success: true };
     } catch (error) {
       console.error('Register failed:', error);
-      return { success: false, message: error.response?.data?.message || 'Register failed' };
+      return { success: false, message: error.response?.message || 'Register failed' };
     }
   };
 
 
   const logout = async () => {
     try {
-      await api.post('/logout');
+      await api.post('/v1/admin/logout');
     } catch (error) {
       console.error('Logout failed:', error);
     } finally {

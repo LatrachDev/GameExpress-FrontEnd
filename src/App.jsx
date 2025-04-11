@@ -8,11 +8,16 @@ import Dashboard from './pages/Dashboard';
 import Home from './pages/Home';
 import Unauthorized from './pages/Unauthorized';
 import Layout from './components/Layout';
-
+import Products from './pages/Products';
+import { CategoryProvider } from './context/CategoryContext';
+import Categories from './pages/Categories';
+import ProductProvider from './context/ProductContext';
 function App() {
   return (
     <Router>
       <AuthProvider>
+        <CategoryProvider>
+          <ProductProvider>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
@@ -31,15 +36,22 @@ function App() {
             </Route>
             
             <Route element={<ProtectedRoute roles={['super_admin']} />}>
-              <Route path="categories" element={<div>Categories Management</div>} />
+              {/* <Route path="categories" element={<div>Categories Management</div>} /> */}
+              <Route path="categories" element={<Categories/>}/>
             </Route>
-            
+           
+            <Route element={<ProtectedRoute roles={['super_admin','product_manager']} />}>
+              <Route path="products" element={<Products/>}/>
+            </Route>
+            {/*  */}
             <Route element={<ProtectedRoute roles={['product_manager', 'super_admin']} />}>
-              <Route path="products" element={<div>Products Management</div>} />
+              <Route path="products" element={<Products/>} />
             </Route>
           </Route>
           <Route path="*" element={<div>404</div>} />
         </Routes>
+        </ProductProvider>
+        </CategoryProvider>
       </AuthProvider>
     </Router>
   );

@@ -8,7 +8,6 @@ const Register = () => {
     name: '',
     email: '',
     password: '',
-    password_confirmation: '',
   });
   const [error, setError] = useState('');
   const { register } = useAuth();
@@ -84,18 +83,6 @@ const Register = () => {
             id="password"
             autoComplete="new-password"
             value={userData.password}
-            onChange={handleChange}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password_confirmation"
-            label="Confirm Password"
-            type="password"
-            id="password_confirmation"
-            autoComplete="new-password"
-            value={userData.password_confirmation}
             onChange={handleChange}
           />
           <Button
