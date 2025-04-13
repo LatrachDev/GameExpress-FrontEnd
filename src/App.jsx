@@ -12,6 +12,7 @@ import Products from './pages/Products';
 import { CategoryProvider } from './context/CategoryContext';
 import Categories from './pages/Categories';
 import ProductProvider from './context/ProductContext';
+import ShowProduct from './pages/showProduct';
 function App() {
   return (
     <Router>
@@ -47,6 +48,8 @@ function App() {
             <Route element={<ProtectedRoute roles={['product_manager', 'super_admin']} />}>
               <Route path="products" element={<Products/>} />
             </Route>
+            {/* show product */}
+            <Route path="products/:id" element={<ShowProduct/>} />
           </Route>
           <Route path="*" element={<div>404</div>} />
         </Routes>

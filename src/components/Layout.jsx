@@ -19,6 +19,15 @@ const Layout = () => {
                   Dashboard
                 </Button>
               ) : null}
+              <Button color="inherit" component={Link} to="/dashboard">
+                  Dashboard
+                </Button>
+              <Button color="inherit" component={Link} to="/products">
+                  Products
+                </Button>
+              <Button color="inherit" component={Link} to="/categories">
+                  Categories
+                </Button>
               <Button color="inherit" onClick={logout}>
                 Logout
               </Button>

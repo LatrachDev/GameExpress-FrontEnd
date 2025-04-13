@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from 'react'
 import api from '../api/axios';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const productContext = createContext();
 export default function ProductProvider({children}) {
@@ -9,6 +9,7 @@ export default function ProductProvider({children}) {
       const [product, setProduct] = useState([]);
         const fetchProducts = async () => {
                 try {
+                    setLoading(true)
                 const { data } = await api.get('v1/admin/products');
                 setProducts(data.products);
             } catch (error) {
@@ -32,7 +33,7 @@ export default function ProductProvider({children}) {
         try{
             const {data} = await api.get("v1/admin/products/"+id)   
         setProduct(data.products)
-        // Navigate("/product/"+id);
+            useNavigate("/product")
         console.log(product)
         } catch(error){
             console.log("failed to fetch")
