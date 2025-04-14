@@ -12,7 +12,7 @@ function AddProduct() {
         price: '',
         stock: '',
         category_id: '',
-        images: [], $
+        images: [], 
     });
 
     const handleClose = () => setShow(false);

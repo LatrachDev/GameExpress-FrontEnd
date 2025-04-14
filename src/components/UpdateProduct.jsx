@@ -4,15 +4,17 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import api from '../api/axios';
 
-function UpdateProduct({ productId }) {
+function UpdateProduct({productId}) {
     const [show, setShow] = useState(false);
     const [formData, setFormData] = useState({
+        _method : 'put',
         name: '',
         slug: '',
         price: '',
         stock: '',
-        category_id: '1',
+        category_id: '',
         images: [],
+        
     });
 
     const handleClose = () => setShow(false);
@@ -39,16 +41,22 @@ function UpdateProduct({ productId }) {
         data.append('slug', formData.slug);
         data.append('price', formData.price);
         data.append('stock', formData.stock);
+        data.append('category_id', formData.category_id);
 
-        // Append each image to the FormData
-        formData.images.forEach((image) => {
-            data.append('images[]', image);
+        formData.images.forEach((file, index) => {
+            data.append(`images[${index}]`, file);
         });
-
+        for (const key in formData) {
+            if (key !== 'images') {
+            data.append(key, formData[key]);
+            }
+        }
+console.log(formData)
         try {
-            const update = await api.put(`/v1/admin/products/${productId}`, data, {
+            const update = await api.post("/v1/admin/products/"+productId, formData,{
                 headers: {
                     'Content-Type': 'multipart/form-data',
+                    "Accept" : "application/json",
                 },
             });
             console.log(update);
@@ -61,10 +69,12 @@ function UpdateProduct({ productId }) {
 
     return (
         <>
-            <Button variant="warning" onClick={handleShow}>
+            {/* <Button variant="warning" onClick={handleShow}>
                 Update Product
-            </Button>
-
+            </Button> */}
+            <button className="text-yellow-500 hover:text-yellow-700" onClick={handleShow} >
+            <i className="fas fa-pen"></i> update
+        </button>  
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Update Product</Modal.Title>
@@ -112,14 +122,23 @@ function UpdateProduct({ productId }) {
                                 placeholder="Enter stock quantity"
                             />
                         </Form.Group>
-                   
+                        <Form.Group className="mb-3" controlId="formCategoryId">
+                            <Form.Label>Category ID</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="category_id"
+                                value={formData.category_id}
+                                onChange={handleChange}
+                                placeholder="Enter category ID"
+                            />
+                        </Form.Group>
                         <Form.Group className="mb-3" controlId="formImages">
                             <Form.Label>Images</Form.Label>
                             <Form.Control
                                 type="file"
                                 name="images"
                                 onChange={handleChange}
-                                multiple
+                                multiple // Allow multiple file selection
                             />
                         </Form.Group>
                     </Form>

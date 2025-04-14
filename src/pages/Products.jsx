@@ -12,7 +12,6 @@ const Products = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const {fetchProducts, products,deleteProduct} = useProducts();
-    const product_id = -1;
     useEffect(()=>{
         fetchProducts();
     },[products])
@@ -21,45 +20,43 @@ const Products = () => {
     deleteProduct(id);
   }
 
-
+  
     return (
         <div className="container mx-auto px-4 py-8">
             <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">Products</h1>
-            <AddProduct/>
-            <UpdateProduct productId={product_id} />
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
-                {products.map((product) => (
-                    
-                    <div
-                        key={product.id}
-                        className="bg-white shadow-lg rounded-lg overflow-hidden transform transition-transform duration-300 hover:scale-105"
-                        
-                    >
-                        <img
-                            src={url + product.images[0].image_url || 'https://via.placeholder.com/300'}
-                            alt={product.name}
-                            className="w-full h-48 object-cover"
-                        />
-                        <div className="p-4">
-                            <Link to={`${product.id}`} className="cursor-pointer text-lg font-semibold text-gray-800 text-center mb-2">
-                                {product.name}
-                            </Link>
-                            <p className="text-gray-600 text-sm mb-1">
-                                <strong>Price:</strong> ${product.price}
-                            </p>
-                            <p className="text-gray-600 text-sm mb-1">
-                                <strong>Stock:</strong> {product.stock}
-                            </p>
-                            <p className="text-gray-600 text-sm">
-                                <strong>Category:</strong> {product.category_id}
-                            </p>
-                            <div className="flex justify-center mt-4 space-x-4"></div>
-                                <button
-                                    className="text-blue-500 hover:text-blue-700"
-                                    onClick={() => product_id =  product.id }
+            <AddProduct />
+            {products.length < 1 ? (
+                <div className='py-4'>No available products</div>
+            ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
+                    {products.map((product) => (
+                        <div
+                            key={product.id}
+                            className="bg-white shadow-lg rounded-lg overflow-hidden transform transition-transform duration-300 hover:scale-105"
+                        >
+                            <img
+                                src={url + product.images[0].image_url || 'https://via.placeholder.com/300'}
+                                alt={product.name}
+                                className="w-full h-48 object-cover"
+                            />
+                            <div className="p-4">
+                                <Link
+                                    to={`${product.id}`}
+                                    className="cursor-pointer text-lg font-semibold text-gray-800 text-center mb-2"
                                 >
-                                    <i className="fas fa-edit"></i> Update
-                                </button>
+                                    {product.name}
+                                </Link>
+                                <p className="text-gray-600 text-sm mb-1">
+                                    <strong>Price:</strong> ${product.price}
+                                </p>
+                                <p className="text-gray-600 text-sm mb-1">
+                                    <strong>Stock:</strong> {product.stock}
+                                </p>
+                                <p className="text-gray-600 text-sm">
+                                    <strong>Category:</strong> {product.category_id}
+                                </p>
+                                <div className="flex justify-center mt-4 space-x-4"></div>
+                                <UpdateProduct productId={product.id} /> <span className='pr-2'></span>
                                 <button
                                     className="text-red-500 hover:text-red-700"
                                     onClick={() => handleDelete(product.id)}
@@ -68,9 +65,9 @@ const Products = () => {
                                 </button>
                             </div>
                         </div>
-                  
-                ))}
-            </div>
+                    ))}
+                </div>
+            )}
         </div>
     );
 };
