@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { useCategory } from '../context/CategoryContext'
+import AddCategory from '../components/AddCategory';
 
 function Categories() {
     // const [categories, setCategories] = useState()
     const {fetchCategories , categories} = useCategory();
     useEffect(()=>{
       fetchCategories();
-    },[])
+    },[categories])
   
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Categories</h1>
+      <AddCategory/>
       <ul className="space-y-4">
         {categories && categories.categries && categories.categries.length > 0 ? (
           categories.categries.map((category, index) => (
