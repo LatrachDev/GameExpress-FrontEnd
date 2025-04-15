@@ -35,10 +35,9 @@ const Layout = () => {
               <Button color="inherit" onClick={logout}>
                 Logout
               </Button>
-              <Button color="inherit">
-              <CartPanel />
-
-              </Button>
+              <div className='inherit'>
+                <CartPanel />
+              </div>
             </>
           ) : (
             <>

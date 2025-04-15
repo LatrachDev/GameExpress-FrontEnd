@@ -18,6 +18,8 @@ const CartPanel = () => {
     .catch(error => console.error('Error fetching cart:', error));
   };
 
+  console.log('fetching cart items:', cartItems);
+
   useEffect(() => {
     if (isOpen) {
       fetchCart();

@@ -11,10 +11,11 @@ const CartSidebar = ({ isOpen, cartItems, onClose }) => {
         {cartItems.length === 0 ? (
           <p className="text-gray-500">Your cart is empty.</p>
         ) : (
-          cartItems.map(item => (
-            <div key={item.id} className="border-b py-2">
-              <h4 className="font-semibold">{item.product.name}</h4>
+          cartItems.map((item, index) => (
+            <div key={index} className="border-b py-2">
+              <h4 className="font-semibold">{item.product}</h4>
               <p>Quantity: {item.quantity}</p>
+              <p className="text-sm text-gray-600">After Fees: ${item.details.After_fees_price.toFixed(2)}</p>
             </div>
           ))
         )}
