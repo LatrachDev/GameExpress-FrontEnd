@@ -7,6 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import API_BASE_URL from '../api/Config';
 import AddProduct from '../components/AddProduct';
 import UpdateProduct from '../components/UpdateProduct';
+import AddToCartButton from '../components/AddToCartButton';
 
 const UserProducts = () => {
     const navigate = useNavigate();
@@ -51,9 +52,9 @@ const UserProducts = () => {
                                 <p className="text-gray-600 text-sm">
                                     <strong>Category:</strong> {product.category_id}
                                 </p>
-                            
-                              
                             </div>
+                            <AddToCartButton productId={product.id}/>
+                         
                         </div>
                         
                     ))}

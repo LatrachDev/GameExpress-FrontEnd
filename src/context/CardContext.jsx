@@ -1,8 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
+const cardContext = useContext()
 function CardContext() {
+    function addToCard(){
+        
+    }
   return (
-    <div>CardContext</div>
+    <CardContext.Provider value={{
+
+    }}/>
   )
 }
 
