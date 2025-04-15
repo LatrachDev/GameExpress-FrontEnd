@@ -26,7 +26,7 @@ const UserProducts = () => {
             ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
                     {products.map((product) => (
-                        <div
+                       product.stock > 0 &&  <div
                             key={product.id}
                             className="bg-white shadow-lg rounded-lg overflow-hidden transform transition-transform duration-300 hover:scale-105"
                         >
@@ -55,6 +55,7 @@ const UserProducts = () => {
                               
                             </div>
                         </div>
+                        
                     ))}
                 </div>
             )}
