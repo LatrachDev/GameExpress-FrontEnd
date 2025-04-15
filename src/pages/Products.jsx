@@ -26,7 +26,7 @@ const Products = () => {
             <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">Products</h1>
             <AddProduct />
             {products.length < 1 ? (
-                <div className='py-4'>No available products</div>
+                <div className='py-4 text-center'>No available products</div>
             ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
                     {products.map((product) => (
