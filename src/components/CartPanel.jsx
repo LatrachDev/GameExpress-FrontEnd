@@ -28,7 +28,7 @@ const CartPanel = () => {
     <>
       <button
         onClick={toggleCart}
-        className="fixed top-4 right-4 bg-gray-800 text-white px-4 py-2 rounded z-50"
+        className="bg-white text-black px-4 py-2 rounded z-50"
       >
         🛒 Cart
       </button>

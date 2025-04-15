@@ -35,6 +35,10 @@ const Layout = () => {
               <Button color="inherit" onClick={logout}>
                 Logout
               </Button>
+              <Button color="inherit" component={Link} to="/cart">
+              <CartPanel />
+
+              </Button>
             </>
           ) : (
             <>
@@ -52,7 +56,6 @@ const Layout = () => {
         </Toolbar>
       </AppBar>
 
-      {/* <CartPanel /> */}
 
 
       <Container maxWidth="lg" sx={{ mt: 4 }}>
