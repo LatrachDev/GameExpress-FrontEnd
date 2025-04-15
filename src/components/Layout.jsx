@@ -15,11 +15,8 @@ const Layout = () => {
           </Typography>
           {isAuthenticated ? (
             <>
-              {user?.roles?.includes('super_admin') || user?.roles?.includes('product_manager') ? (
+              {user?.roles?.includes('super_admin') || user?.roles?.includes('product_manager') && (
               <>
-                <Button color="inherit" component={Link} to="/dashboard">
-                  Dashboard
-                </Button>
                  <Button color="inherit" component={Link} to="/dashboard">
                  Dashboard
                </Button>
@@ -30,21 +27,18 @@ const Layout = () => {
                  Categories
                </Button>
               </>
-              ) :
-              <>
-               <Button color="inherit" component={Link} to="/products">
+              ) 
+              }
+               <Button color="inherit" component={Link} to="client/products">
               Products
             </Button>
-              </>
-              }
-             
               <Button color="inherit" onClick={logout}>
                 Logout
               </Button>
             </>
           ) : (
             <>
-               <Button color="inherit" component={Link} to="/products">
+               <Button color="inherit" component={Link} to="guest/products">
               Products
             </Button>
               <Button color="inherit" component={Link} to="/login">

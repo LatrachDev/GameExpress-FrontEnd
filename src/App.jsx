@@ -13,6 +13,7 @@ import { CategoryProvider } from './context/CategoryContext';
 import Categories from './pages/Categories';
 import ProductProvider from './context/ProductContext';
 import ShowProduct from './pages/showProduct';
+import UserProducts from './pages/UserProducts'
 function App() {
   return (
     <Router>
@@ -44,6 +45,11 @@ function App() {
             <Route element={<ProtectedRoute roles={['super_admin','product_manager']} />}>
               <Route path="products" element={<Products/>}/>
             </Route>
+          {/* client and guest */}
+          <Route element={<ProtectedRoute roles={['client']} />}>
+              <Route path="guest/products" element={<UserProducts/>}/>
+            </Route>
+            <Route path="client/products"  element={<UserProducts/>}/>
             {/*  */}
             <Route element={<ProtectedRoute roles={['product_manager', 'super_admin']} />}>
               <Route path="products" element={<Products/>} />
