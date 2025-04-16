@@ -19,10 +19,9 @@ const Products = () => {
   function handleDelete(id){
     deleteProduct(id);
   }
-
   
-    return (
-        <div className="container mx-auto px-4 py-8">
+  return (
+      <div className="container mx-auto px-4 py-8">
             <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">Products</h1>
             <AddProduct />
             {products.length < 1 ? (
@@ -34,6 +33,7 @@ const Products = () => {
                             key={product.id}
                             className="bg-white shadow-lg rounded-lg overflow-hidden transform transition-transform duration-300 hover:scale-105"
                         >
+
                             <img
                                 src={url + product.images[0].image_url || 'https://via.placeholder.com/300'}
                                 alt={product.name}

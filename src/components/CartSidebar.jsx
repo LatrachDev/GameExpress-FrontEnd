@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import api from '../api/axios';
 import { data } from 'react-router-dom';
+import API_BASE_URL from '../api/Config';
+
+const url = API_BASE_URL;
 
 const CartSidebar = ({ isOpen, onClose }) => {
     const [cartItems, setCartItems] = useState([]);
@@ -34,6 +37,15 @@ const CartSidebar = ({ isOpen, onClose }) => {
                         <p>Quantity: {item.quantity}</p>
                         <p>Price: {item.price}</p>
                         <p>Category: {item.product.category.name}</p>
+                        <img
+                                src={
+                                    item.product.images && item.product.images.length > 0
+                                        ? url + item.product.images[0].image_url
+                                        : 'https://via.placeholder.com/300'
+                                }
+                                alt={item.product.name}
+                                className="w-full h-48 object-cover"
+                            />
                     </div>
                     ))
                   ) : (
