@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import api from '../api/axios';
+import { useAuth } from '../context/AuthContext';
 
 const AddToCartButton = ({ productId }) => {
  
-
+  const {isAuthenticated}= useAuth()
   const [quantity, setQuantity] = useState({product_id: productId, quantity: 1});
 
   const handleChange = (e) => {
@@ -13,9 +14,31 @@ const AddToCartButton = ({ productId }) => {
       quantity: e.target.value
     });
   };
-
+// check if there is items in storage
+useEffect(()=>{
+  if (isAuthenticated){
+    let cartLocalStorage = JSON.parse(localStorage.getItem("cart")) || [];
+  if (cartLocalStorage){
+    for(let i = 0; i < cartLocalStorage.length; i++){ 
+      const item = {product_id: cartLocalStorage[i].product_id , quantity:  parseInt(cartLocalStorage[i].quantity)}
+      console.log(item)
+      const send = async ()=>{
+        try {
+          const updateQuantity = await api.post('v2/client/addtocart',item)
+          console.log(updateQuantity)
+        } catch(error){
+          console.log(error);
+        }
+      }
+      send();
+    }
+    localStorage.removeItem("cart");
+  }
+  }
+},[isAuthenticated])
   function handleCard(e){
     e.preventDefault();
+   if (isAuthenticated){
     const send = async ()=>{
       try {
         const updateQuantity = await api.post('v2/client/addtocart',quantity)
@@ -25,6 +48,13 @@ const AddToCartButton = ({ productId }) => {
       }
     }
     send();
+
+   } else {
+   let cart =JSON.parse(localStorage.getItem("cart")) || [] ;
+    cart.push(quantity)
+    localStorage.setItem("cart",JSON.stringify(cart));
+    console.log("Added to local cart");
+   }
   }
   return (
     <>
@@ -45,5 +75,4 @@ const AddToCartButton = ({ productId }) => {
     </>
   );
 };
-
-export default AddToCartButton
+export default AddToCartButton;
