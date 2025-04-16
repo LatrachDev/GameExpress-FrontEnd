@@ -6,6 +6,7 @@ import { Box, CircularProgress } from '@mui/material';
 
 function ShowProduct() {
 const {id} = useParams();
+const {fetchCart} = useCard();
 const [product, setProduct] = useState({});
 const [loading, setLoading] = useState(true);
 useEffect(()=>{

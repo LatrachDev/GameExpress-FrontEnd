@@ -14,12 +14,14 @@ import Categories from './pages/Categories';
 import ProductProvider from './context/ProductContext';
 import ShowProduct from './pages/showProduct';
 import UserProducts from './pages/UserProducts'
+import CardProvider from './context/CardContext';
 function App() {
   return (
     <Router>
       <AuthProvider>
         <CategoryProvider>
           <ProductProvider>
+            <CardProvider>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
@@ -59,6 +61,7 @@ function App() {
           </Route>
           <Route path="*" element={<div>404</div>} />
         </Routes>
+        </CardProvider>
         </ProductProvider>
         </CategoryProvider>
       </AuthProvider>

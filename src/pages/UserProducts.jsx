@@ -12,9 +12,11 @@ const UserProducts = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const {fetchProducts, products} = useProducts();
+    
     useEffect(()=>{
         fetchProducts();
     },[products])
+    
     const url = API_BASE_URL;
 
   
