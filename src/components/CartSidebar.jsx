@@ -23,58 +23,82 @@ const CartSidebar = ({ isOpen, onClose }) => {
     }, [cartItems]);
 
     return (
-        <div className={`text-black fixed top-0 right-0 w-80 h-full bg-white shadow-lg transition-transform duration-300 z-50 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-            <div className="p-4 border-b flex justify-between items-center">
-                <h2 className="text-lg font-bold">My Cart</h2>
-                <button onClick={onClose} className="text-red-500 text-xl font-bold">&times;</button>
+        <div className={`fixed top-0 right-0 w-96 h-full bg-white shadow-xl transition-all duration-300 ease-in-out z-50 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+            <div className="p-6 border-b border-gray-200 flex justify-between items-center bg-blue-500">
+                <h2 className="text-xl font-bold text-gray-800">Shopping Cart</h2>
+                <button 
+                    onClick={onClose} 
+                    className="text-black hover:text-gray-700 text-4xl font-light transition-colors"
+                >
+                    &times;
+                </button>
             </div>
-            <div className="p-4]">
+            
+            <div className="overflow-y-auto text-black h-[calc(100%-120px)]">
                 {cartItems.length > 0 ? (
-                  cartItems.map((item, index) => (
-                    <div key={index} className="border-b py-2 text-black">
-                    {console.log("Cart item:", item)}
-                        <h4 className="font-semibold">{item.product.name}</h4>
-                        <p>Quantity: {item.quantity}</p>
-                        <p>Price: {item.price}</p>
-                        <p>Category: {item.product.category.name}</p>
-                        <img
-                                src={
-                                    item.product.images && item.product.images.length > 0
-                                        ? url + item.product.images[0].image_url
-                                        : 'https://via.placeholder.com/300'
-                                }
-                                alt={item.product.name}
-                                className="w-full h-48 object-cover"
-                            />
-                    </div>
+                    cartItems.map((item, index) => (
+                        <div key={index} className="p-4 border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                            {console.log("Cart item:", item)}
+                            <div className="flex gap-4">
+                                <div className="flex-shrink-0">
+                                    <img
+                                        src={
+                                            item.product.images && item.product.images.length > 0
+                                                ? url + item.product.images[0].image_url
+                                                : 'https://via.placeholder.com/300'
+                                        }
+                                        alt={item.product.name}
+                                        className="w-20 h-20 object-cover rounded-md"
+                                    />
+                                </div>
+                                <div className="flex-grow">
+                                    <h4 className="font-medium text-gray-900">{item.product.name}</h4>
+                                    <p className="text-sm text-gray-500">Category: {item.product.category.name}</p>
+                                    <div className="mt-2 flex justify-between items-center">
+                                        <p className="text-gray-700">Qty: {item.quantity}</p>
+                                        <p className="font-medium text-gray-900">${item.price}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     ))
-                  ) : (
-                  <p className="text-gray-500">Your cart is empty.</p>
+                ) : (
+                    <div className="flex flex-col items-center justify-center h-full">
+                        <svg 
+                            xmlns="http://www.w3.org/2000/svg" 
+                            className="h-16 w-16 text-gray-300 mb-4" 
+                            fill="none" 
+                            viewBox="0 0 24 24" 
+                            stroke="currentColor"
+                        >
+                            <path 
+                                strokeLinecap="round" 
+                                strokeLinejoin="round" 
+                                strokeWidth={1} 
+                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" 
+                            />
+                        </svg>
+                        <p className="text-gray-500 text-lg">Your cart is empty</p>
+                        <p className="text-gray-400 text-sm mt-1">Start adding some items</p>
+                    </div>
                 )}
             </div>
+            
+            {cartItems.length > 0 && (
+                <div className="absolute bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200">
+                    <div className="flex justify-between mb-4">
+                        <span className="font-medium text-gray-700">Subtotal</span>
+                        <span className="font-bold text-gray-900">
+                            ${cartItems.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)}
+                        </span>
+                    </div>
+                    <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-md font-medium transition-colors">
+                        Proceed to Checkout
+                    </button>
+                </div>
+            )}
         </div>
     );
-    // return (
-    //     <div className={`fixed top-0 right-0 w-80 h-full bg-white shadow-lg transition-transform duration-300 z-50 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-    //         <div className="p-4 border-b flex justify-between items-center">
-    //             <h2 className="text-lg font-bold">My Cart</h2>
-    //             <button onClick={onClose} className="text-red-500 text-xl font-bold">&times;</button>
-    //         </div>
-    //         <div className="p-4 overflow-y-auto h-[calc(100%-60px)]">
-    //             {cartItems.length === 0 ? (
-    //                 <p className="text-gray-500">Your cart is empty.</p>
-    //             ) : (
-    //                 cartItems.map((item, index) => (
-    //                     <div key={index} className="border-b py-2">
-    //                         <h4 className="font-semibold">{item.product}</h4>
-    //                         <p>Quantity: {item.quantity}</p>
-    //                         <p className="text-sm text-gray-600">After Fees: ${item.details.After_fees_price.toFixed(2)}</p>
-    //                     </div>
-    //                 ))
-    //             )}
-    //         </div>
-    //     </div>
-    // );
 };
 
 export default CartSidebar;
