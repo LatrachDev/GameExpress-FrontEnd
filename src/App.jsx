@@ -49,9 +49,9 @@ function App() {
             </Route>
           {/* client and guest */}
           <Route element={<ProtectedRoute roles={['client']} />}>
-              <Route path="guest/products" element={<UserProducts/>}/>
+              <Route path="client/products" element={<UserProducts/>}/>
             </Route>
-            <Route path="client/products"  element={<UserProducts/>}/>
+            <Route path="guest/products"  element={<UserProducts/>}/>
             {/*  */}
             <Route element={<ProtectedRoute roles={['product_manager', 'super_admin']} />}>
               <Route path="products" element={<Products/>} />

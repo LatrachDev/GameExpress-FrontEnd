@@ -53,7 +53,7 @@ const Products = () => {
                                     <strong>Stock:</strong> {product.stock}
                                 </p>
                                 <p className="text-gray-600 text-sm">
-                                    <strong>Category:</strong> {product.category_id}
+                                    <strong>Category:</strong> {product.category.name}
                                 </p>
                                 <div className="flex justify-center mt-4 space-x-4"></div>
                                 <UpdateProduct productId={product.id} /> <span className='pr-2'></span>

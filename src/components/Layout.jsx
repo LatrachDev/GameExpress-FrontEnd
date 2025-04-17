@@ -15,7 +15,7 @@ const Layout = () => {
           </Typography>
           {isAuthenticated ? (
             <>
-              {user?.roles?.includes('super_admin') || user?.roles?.includes('product_manager') && (
+              {(user.roles[0] === "super_admin" || user.roles[0] === "product_manager") && (
               <>
                  <Button color="inherit" component={Link} to="/dashboard">
                  Dashboard
@@ -29,9 +29,6 @@ const Layout = () => {
               </>
               ) 
               }
-               <Button color="inherit" component={Link} to="client/products">
-              Products
-            </Button>
               <Button color="inherit" onClick={logout}>
                 Logout
               </Button>
