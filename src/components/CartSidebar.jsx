@@ -62,8 +62,8 @@ const CartSidebar = ({ isOpen, onClose }) => {
                                 </div>
                                 <div className="flex-grow">
                                     <h4 className="font-medium text-gray-900">{item.product.name}</h4>
-                                    <p className="text-sm text-gray-500">Category: {item.product.category.name}</p>
-                                    <div className="mt-2 flex justify-between items-center">
+                                    <p className="text-sm text-gray-500">{item.product.category.name}</p>
+                                    <div className="-mt-2 flex justify-between items-center">
                                         <p className="text-gray-700">Qty: {item.quantity}</p>
                                         <p className="font-medium text-gray-900">${item.price}</p>
                                     </div>
