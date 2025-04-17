@@ -20,7 +20,16 @@ const CartSidebar = ({ isOpen, onClose }) => {
         };
 
         fetchCart();
-    }, [cartItems]);
+    }, []);
+
+    const handleRemoveItem = async(itemId) => {
+        try {
+            await api.delete(`v2/client/cart/${itemId}/`);
+            setCartItems((prevItems) => prevItems.filter(item => item.id !== itemId));
+        } catch (error) {
+            console.error('error removing item from cart: ', error);
+        }
+    }
 
     return (
         <div className={`fixed top-0 right-0 w-96 h-full bg-white shadow-xl transition-all duration-300 ease-in-out z-50 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
@@ -28,7 +37,7 @@ const CartSidebar = ({ isOpen, onClose }) => {
                 <h2 className="text-xl font-bold text-gray-800">Shopping Cart</h2>
                 <button 
                     onClick={onClose} 
-                    className="text-black hover:text-gray-700 text-4xl font-light transition-colors"
+                    className="text-white hover:text-gray-700 text-4xl transition-colors"
                 >
                     &times;
                 </button>
@@ -36,8 +45,8 @@ const CartSidebar = ({ isOpen, onClose }) => {
             
             <div className="overflow-y-auto text-black h-[calc(100%-120px)]">
                 {cartItems.length > 0 ? (
-                    cartItems.map((item, index) => (
-                        <div key={index} className="p-4 border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                    cartItems.map((item) => (
+                        <div key={item.id} className="p-4 border-b border-gray-100 hover:bg-gray-50 transition-colors">
                             {console.log("Cart item:", item)}
                             <div className="flex gap-4">
                                 <div className="flex-shrink-0">
@@ -59,6 +68,13 @@ const CartSidebar = ({ isOpen, onClose }) => {
                                         <p className="font-medium text-gray-900">${item.price}</p>
                                     </div>
                                 </div>
+                                <button
+                                    onClick={() => handleRemoveItem(item.id)}
+                                    className="text-red-500 hover:text-red-700  border-l-2 pl-2 text-sm font-medium"
+                                >
+                                    Remove
+                                </button>
+
                             </div>
                         </div>
                     ))
@@ -89,7 +105,8 @@ const CartSidebar = ({ isOpen, onClose }) => {
                     <div className="flex justify-between mb-4">
                         <span className="font-medium text-gray-700">Subtotal</span>
                         <span className="font-bold text-gray-900">
-                            ${cartItems.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)}
+                            {/* ${cartItems.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)} */}
+                            ${cartItems.reduce((total, item) => total + item.price, 0).toFixed(2)}
                         </span>
                     </div>
                     <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-md font-medium transition-colors">
