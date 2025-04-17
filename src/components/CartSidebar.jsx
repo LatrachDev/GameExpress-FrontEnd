@@ -7,7 +7,7 @@ const url = API_BASE_URL;
 
 const CartSidebar = ({ isOpen, onClose }) => {
     const [cartItems, setCartItems] = useState([]);
-
+    
     useEffect(() => {
         const fetchCart = async () => {
             const token = localStorage.getItem("token");
@@ -21,13 +21,26 @@ const CartSidebar = ({ isOpen, onClose }) => {
                 }
                 // console.log("Cart response:", response);
             } else {
-                const localCart = localStorage.getItem("guestCart");
+                const localCart = JSON.parse(localStorage.getItem("cart")) || [];   
                 console.log("Local cart for guest :", localCart);
-                if (localCart) {
-                    setCartItems(JSON.parse(localCart));
-                } else {
-                    setCartItems([]);
-                }
+                const arrProducts = [];
+                localCart.forEach(async (item) => {
+                    console.log(item.product_id);
+                    try {
+                        const response = await api.get("v1/admin/products/" + item.product_id);
+                        const productWithQuantity = { 
+                            ...response.data, 
+                            quantity: item.quantity, 
+                            price: response.data.product.price * item.quantity 
+                        };
+                        // console.log(item.quantity);
+
+                        arrProducts.push(productWithQuantity);
+                        setCartItems([...arrProducts]);
+                    } catch (error) {
+                        console.error('Error fetching product details:', error);
+                    }
+                });
             }
         };
 
@@ -59,6 +72,7 @@ const CartSidebar = ({ isOpen, onClose }) => {
                 {cartItems.length > 0 ? (
                     cartItems.map((item) => (
                         <div key={item.id} className="p-4 border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                            {console.log(item)}
                             {console.log("Cart item:", item)}
                             <div className="flex gap-4">
                                 <div className="flex-shrink-0">
@@ -72,12 +86,13 @@ const CartSidebar = ({ isOpen, onClose }) => {
                                         className="w-20 h-20 object-cover rounded-md"
                                     />
                                 </div>
-                                <div className="flex-grow">
+                                <div className="flex-grow" key={item.id}>
                                     <h4 className="font-medium text-gray-900">{item.product.name}</h4>
                                     <p className="text-sm text-gray-500">{item.product.category.name}</p>
                                     <div className="-mt-2 flex justify-between items-center">
                                         <p className="text-gray-700">Qty: {item.quantity}</p>
-                                        <p className="font-medium text-gray-900">${item.price}</p>
+                                        <p className="font-medium text-gray-900">${item.product.price}</p>
+                                        {console.log("item fiha hadchi :", item)}
                                     </div>
                                 </div>
                                 <button
@@ -117,8 +132,8 @@ const CartSidebar = ({ isOpen, onClose }) => {
                     <div className="flex justify-between mb-4">
                         <span className="font-medium text-gray-700">Subtotal</span>
                         <span className="font-bold text-gray-900">
-                            {/* ${cartItems.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)} */}
                             ${cartItems.reduce((total, item) => total + item.price, 0).toFixed(2)}
+                            
                         </span>
                     </div>
                     <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-md font-medium transition-colors">
