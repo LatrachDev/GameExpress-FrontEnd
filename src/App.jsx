@@ -57,7 +57,7 @@ function App() {
               <Route path="products" element={<Products/>} />
             </Route>
             {/* show product */}
-            <Route path="products/:id" element={<ShowProduct/>} />
+            <Route path=":user/products/:id" element={<ShowProduct/>} />
           </Route>
           <Route path="*" element={<div>404</div>} />
         </Routes>

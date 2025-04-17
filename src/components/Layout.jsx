@@ -15,38 +15,50 @@ const Layout = () => {
           </Typography>
           {isAuthenticated ? (
             <>
-              {(user.roles[0] === "super_admin" || user.roles[0] === "product_manager") && (
-              <>
-                 <Button color="inherit" component={Link} to="/dashboard">
-                 Dashboard
-               </Button>
-             <Button color="inherit" component={Link} to="/products">
-                 Products
-               </Button>
-             <Button color="inherit" component={Link} to="/categories">
-                 Categories
-               </Button>
-              </>
-              ) 
-              }
-              <Button color="inherit" onClick={logout}>
-                Logout
-              </Button>
-              <div className='inherit'>
-                <CartPanel />
-              </div>
+              {(user.roles[0] === "super_admin" || user.roles[0] === "product_manager") ? (
+                <>
+                  <Button color="inherit" component={Link} to="/dashboard">
+                    Dashboard
+                  </Button>
+                  <Button color="inherit" component={Link} to="/products">
+                    Products
+                  </Button>
+                  <Button color="inherit" component={Link} to="/categories">
+                    Categories
+                  </Button>
+                  <Button color="inherit" onClick={logout}>
+                    Logout
+                  </Button>
+                </>
+              ) : user.roles[0] === "client" ? (
+                <>
+                  <Button color="inherit" component={Link} to="/guest/products">
+                    Products
+                  </Button>
+                  <div className='inherit'>
+                    <CartPanel />
+                  </div>
+                  <Button color="inherit" onClick={logout}>
+                    Logout
+                  </Button>
+                </>
+              ) : null /* Handle other roles if needed */}
             </>
           ) : (
+            // Guest view
             <>
-               <Button color="inherit" component={Link} to="guest/products">
-              Products
-            </Button>
+              <Button color="inherit" component={Link} to="/guest/products">
+                Products
+              </Button>
               <Button color="inherit" component={Link} to="/login">
                 Login
               </Button>
               <Button color="inherit" component={Link} to="/register">
                 Register
               </Button>
+              <div className='inherit'>
+                <CartPanel />
+              </div>
             </>
           )}
         </Toolbar>

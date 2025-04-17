@@ -5,8 +5,7 @@ import API_BASE_URL from '../api/Config';
 import { Box, CircularProgress } from '@mui/material';
 
 function ShowProduct() {
-const {id} = useParams();
-const {fetchCart} = useCard();
+const {id,user} = useParams();
 const [product, setProduct] = useState({});
 const [loading, setLoading] = useState(true);
 useEffect(()=>{
