@@ -57,7 +57,7 @@ const Dashboard = () => {
         Dashboard
       </h1>
       <p className="text-center text-gray-600 mb-6">
-        Welcome back, {user.user?.name}! Role: {user.roles[0]}
+        Welcome back, {user.user?.name}! you logged in as {user.roles[0]}
      </p>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">

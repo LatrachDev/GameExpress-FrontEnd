@@ -8,55 +8,54 @@ const Layout = () => {
 
   return (
     <>
-      <AppBar position="static">
+      <AppBar position="static" sx={{ backgroundColor: 'black' }}>
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: 'white' }}>
             E-Commerce
           </Typography>
           {isAuthenticated ? (
             <>
               {(user.roles[0] === "super_admin" || user.roles[0] === "product_manager") ? (
                 <>
-                  <Button color="inherit" component={Link} to="/dashboard">
+                  <Button sx={{ color: 'white' }} component={Link} to="/dashboard">
                     Dashboard
                   </Button>
-                  <Button color="inherit" component={Link} to="/products">
+                  <Button sx={{ color: 'white' }} component={Link} to="/products">
                     Products
                   </Button>
-                  <Button color="inherit" component={Link} to="/categories">
+                  <Button sx={{ color: 'white' }} component={Link} to="/categories">
                     Categories
                   </Button>
-                  <Button color="inherit" onClick={logout}>
+                  <Button sx={{ color: 'white' }} onClick={logout}>
                     Logout
                   </Button>
                 </>
               ) : user.roles[0] === "client" ? (
                 <>
-                  <Button color="inherit" component={Link} to="/guest/products">
+                  <Button sx={{ color: 'white' }} component={Link} to="/guest/products">
                     Products
                   </Button>
-                  <div className='inherit'>
+                  <div className="inherit">
                     <CartPanel />
                   </div>
-                  <Button color="inherit" onClick={logout}>
+                  <Button sx={{ color: 'white' }} onClick={logout}>
                     Logout
                   </Button>
                 </>
-              ) : null /* Handle other roles if needed */}
+              ) : null}
             </>
           ) : (
-            // Guest view
             <>
-              <Button color="inherit" component={Link} to="/guest/products">
+              <Button sx={{ color: 'white' }} component={Link} to="/guest/products">
                 Products
               </Button>
-              <Button color="inherit" component={Link} to="/login">
+              <Button sx={{ color: 'white' }} component={Link} to="/login">
                 Login
               </Button>
-              <Button color="inherit" component={Link} to="/register">
+              <Button sx={{ color: 'white' }} component={Link} to="/register">
                 Register
               </Button>
-              <div className='inherit'>
+              <div className="inherit">
                 <CartPanel />
               </div>
             </>
@@ -64,11 +63,8 @@ const Layout = () => {
         </Toolbar>
       </AppBar>
 
-
-
       <Container maxWidth="lg" sx={{ mt: 4 }}>
         <Outlet />
-        
       </Container>
     </>
   );
