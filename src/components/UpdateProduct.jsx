@@ -20,9 +20,6 @@ function UpdateProduct({productId}) {
     });
        useEffect(()=>{
             fetchCategories();
-            if (categories && categories.categries.length > 0){
-                console.log(categories.categries)
-            }
         }, [categories])
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);

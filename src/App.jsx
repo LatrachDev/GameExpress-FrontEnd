@@ -58,6 +58,7 @@ function App() {
             </Route>
             {/* show product */}
             <Route path=":user/products/:id" element={<ShowProduct/>} />
+            <Route path="products/:id" element={<ShowProduct/>} />
           </Route>
           <Route path="*" element={<div>404</div>} />
         </Routes>
