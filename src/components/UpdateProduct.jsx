@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import api from '../api/axios';
+import { useCategory } from '../context/CategoryContext';
 
 function UpdateProduct({productId}) {
     const [show, setShow] = useState(false);
+    const { fetchCategories,categories} = useCategory();
     const [formData, setFormData] = useState({
         _method : 'put',
         name: '',
@@ -16,7 +18,9 @@ function UpdateProduct({productId}) {
         images: [],
         
     });
-
+       useEffect(()=>{
+            fetchCategories();
+        }, [categories])
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
@@ -123,15 +127,24 @@ console.log(formData)
                             />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formCategoryId">
-                            <Form.Label>Category ID</Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="category_id"
-                                value={formData.category_id}
-                                onChange={handleChange}
-                                placeholder="Enter category ID"
-                            />
-                        </Form.Group>
+                        <Form.Label>Category</Form.Label>
+                        <Form.Select
+                            name="category_id"
+                            value={formData.category_id}
+                            onChange={handleChange}
+                        >
+                            <option value="">Select a category</option>
+                            {/* <div>{console.log(categories)}</div> */}
+                            {(categories && categories.categries.length > 0) ? 
+                            
+                                categories.categries.map((category) => (
+                                    <option key={category.id} value={category.id}>
+                                        {category.name}
+                                    </option>
+                                ))
+                            : null}
+                        </Form.Select>
+                    </Form.Group>
                         <Form.Group className="mb-3" controlId="formImages">
                             <Form.Label>Images</Form.Label>
                             <Form.Control

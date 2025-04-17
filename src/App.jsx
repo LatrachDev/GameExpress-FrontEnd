@@ -49,14 +49,15 @@ function App() {
             </Route>
           {/* client and guest */}
           <Route element={<ProtectedRoute roles={['client']} />}>
-              <Route path="guest/products" element={<UserProducts/>}/>
+              <Route path="client/products" element={<UserProducts/>}/>
             </Route>
-            <Route path="client/products"  element={<UserProducts/>}/>
+            <Route path="guest/products"  element={<UserProducts/>}/>
             {/*  */}
             <Route element={<ProtectedRoute roles={['product_manager', 'super_admin']} />}>
               <Route path="products" element={<Products/>} />
             </Route>
             {/* show product */}
+            <Route path=":user/products/:id" element={<ShowProduct/>} />
             <Route path="products/:id" element={<ShowProduct/>} />
           </Route>
           <Route path="*" element={<div>404</div>} />
