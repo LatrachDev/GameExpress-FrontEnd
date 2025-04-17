@@ -10,13 +10,25 @@ const CartSidebar = ({ isOpen, onClose }) => {
 
     useEffect(() => {
         const fetchCart = async () => {
-            try {
-                const response = await api.get("v2/client/cart/");
-                setCartItems(response.data);
-            } catch (error) {
-                console.error('Error fetching cart:', error);
+            const token = localStorage.getItem("token");
+
+            if (token) {
+                try {
+                    const response = await api.get("v2/client/cart/");
+                    setCartItems(response.data);
+                } catch (error) {
+                    console.error('Error fetching cart:', error);
+                }
+                // console.log("Cart response:", response);
+            } else {
+                const localCart = localStorage.getItem("guestCart");
+                console.log("Local cart for guest :", localCart);
+                if (localCart) {
+                    setCartItems(JSON.parse(localCart));
+                } else {
+                    setCartItems([]);
+                }
             }
-            // console.log("Cart response:", response);
         };
 
         fetchCart();

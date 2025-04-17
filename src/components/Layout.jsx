@@ -50,6 +50,9 @@ const Layout = () => {
               <Button color="inherit" component={Link} to="/register">
                 Register
               </Button>
+              <div className='inherit'>
+                <CartPanel />
+              </div>
             </>
           )}
         </Toolbar>
